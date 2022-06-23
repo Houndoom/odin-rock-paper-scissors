@@ -16,39 +16,47 @@ function capitaliseFirst(string) {
 
 function playRound(playerSelection, computerSelection) {
   const options = ['Rock', 'Paper', 'Scissors'];
-  if (!playerSelection && !computerSelection) {
-    return "Please enter player and computer selections!";
-  }
-  if (!playerSelection) {
-    return "Please enter player selection";
-  }
-  if (!computerSelection) {
-    return "Please enter computer selection";
-  }
 
   playerSelection = capitaliseFirst(playerSelection);
   computerSelection = capitaliseFirst(computerSelection);
-
-  if (!options.includes(playerSelection)) {
-    return "Please enter a valid player selection!"
-  }
-
-  if (!options.includes(computerSelection)) {
-    return "Please enter a valid computer selection!"
-  }
   
   if (playerSelection === computerSelection) {
-    return "It's a draw!";
+    return ["It's a draw!","Draw"];
   } else if (playerSelection === 'Rock' && computerSelection === 'Paper' || playerSelection === 'Paper' && computerSelection === 'Scissors' || playerSelection === 'Scissors' && computerSelection === 'Rock') {
-    return "You lose! " + computerSelection + " beats " + playerSelection;
+    return ["You lose! " + computerSelection + " beats " + playerSelection + ".","Computer"];
   } else {
-    return "You win! " + playerSelection + " beats " + computerSelection;
+    return ["You win! " + playerSelection + " beats " + computerSelection + ".","Player"];
   }
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
 function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("Please enter 'Rock', 'Paper', or 'Scissors'");
-    console.log(playRound(playerSelection, computerPlay()));
+  if (playerScore < 5 && computerScore < 5) {
+    playerSelection = this.textContent;
+    const result = document.querySelector('#result');
+    const outcome = playRound(playerSelection, computerPlay());
+    result.textContent = `${outcome[0]}`;
+    if (outcome[1] === 'Computer') {
+      computerScore += 1;
+      const computer = document.querySelector('#computer-score');
+      computer.textContent = `Computer score: ${computerScore}`;
+      if (computerScore === 5) {
+        result.textContent += ' Computer has won!';
+      }
+    } else if (outcome[1] === 'Player') {
+      playerScore += 1;
+      const player = document.querySelector('#player-score');
+      player.textContent = `Player score: ${playerScore}`;
+      if (playerScore === 5) {
+        result.textContent += ' Player has won!';
+      }
+    }
   }
+  return;
 }
+
+const choice = document.querySelectorAll('.choice');
+
+choice.forEach(e => e.addEventListener('click',game));

@@ -1,0 +1,16 @@
+ul {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 20rem;
+  padding: 0px;
+  gap: 5rem;
+}
+
+li {
+  list-style-type: none;
+}
+
+.choice {
+  height: 2rem;
+  width: 5rem;
+}
